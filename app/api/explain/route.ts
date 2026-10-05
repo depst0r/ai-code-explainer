@@ -13,5 +13,8 @@ export async function POST(req: Request) {
     })
 
     const data = await res.json()
+
+    console.log('POLLINATIONS:', JSON.stringify(data, null, 2))
+
     return Response.json({ reply: data.choices[0].message.content })
 }

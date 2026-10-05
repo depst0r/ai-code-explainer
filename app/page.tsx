@@ -1,6 +1,7 @@
 'use client'
-
-import { useState } from "react";
+import Markdown from "react-markdown"
+import remarkGfm from 'remark-gfm'
+import { useState } from "react"
 
 export default function Home() {
 
@@ -21,7 +22,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-zinc-100 flex justify-center items-center p-8">
-      <main className="flex flex-col gap-4 w-full max-w-2xl text-center">
+      <main className="flex flex-col gap-4 w-full max-w-2xl">
         <h1 className="text-3xl font-bold">AI Code Explainer</h1>
         <textarea
           className="w-full h-64 p-4 bg-zinc-800 border-2 border-zinc-600 text-zinc-100"
@@ -35,7 +36,10 @@ export default function Home() {
         >
           Объяснить
         </button>
-        {reply && <div className="p-4 bg-zinc-800 border-2 border-zinc-600">{reply}</div>}
+        {reply && 
+          <div className="p-4 bg-zinc-800 border-2 border-zinc-600 prose prose-invert max-w-none">
+            <Markdown remarkPlugins={[remarkGfm]}>{reply}</Markdown>
+            </div>}
       </main>
     </div>
   )
