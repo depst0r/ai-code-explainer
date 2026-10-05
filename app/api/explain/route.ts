@@ -1,12 +1,15 @@
+import { MODES } from "@/app/lib/modes"
+
 export async function POST(req: Request) {
-    const { code } = await req.json()
+    const { code, mode } = await req.json()
+    const selected = MODES.find(m => m.id === mode)
     const res = await fetch('https://text.pollinations.ai/openai', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
             model: 'openai',
             messages: [
-                {role: 'system', content: 'Ты объясняешь код понятным языком'},
+                { role: 'system', content: selected ? selected.prompt : '' },
                 {role: 'user', content: code}
             ]
         })

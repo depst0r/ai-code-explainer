@@ -15,7 +15,7 @@ export default function Home() {
   const res = await fetch('/api/explain', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ code }),
+    body: JSON.stringify({ code, mode }),
   })
   const data = await res.json()
   setReply(data.reply)
