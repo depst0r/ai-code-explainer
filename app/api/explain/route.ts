@@ -7,7 +7,8 @@ export async function POST(req: Request) {
 
     if (inputMode === "url") {
         const rawUrl = url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/')
-        
+        const res = await fetch(rawUrl)
+        finalCode = await res.text()
     }
 
     const selected = MODES.find(m => m.id === mode)
@@ -18,7 +19,7 @@ export async function POST(req: Request) {
             model: 'openai',
             messages: [
                 { role: 'system', content: selected ? selected.prompt : '' },
-                {role: 'user', content: code}
+                {role: 'user', content: finalCode}
             ]
         })
     })
