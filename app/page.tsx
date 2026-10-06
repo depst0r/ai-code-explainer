@@ -44,23 +44,33 @@ export default function Home() {
         <div className="flex gap-2 justify-center">
           <button
             onClick={() => setInputMode('code')}
-            className={`px-4 py-2 border-2 cursor-pointer ${inputMode === 'code'  && 'bg-zinc-600 border-zinc-400'}`}
+            className={`px-4 py-2 border-2 cursor-pointer ${inputMode === 'code'  ? 'bg-zinc-600 border-zinc-400' : 'bg-zinc-800 border-zinc-600'}`}
           >
             Код
           </button>
           <button
             onClick={() => setInputMode('url')}
-            className={`px-4 py-2 border-2 cursor-pointer ${inputMode === 'url'  && 'bg-zinc-600 border-zinc-400'}`}
+            className={`px-4 py-2 border-2 cursor-pointer ${inputMode === 'url' ? 'bg-zinc-600 border-zinc-400' : 'bg-zinc-800 border-zinc-600'}`}
           >
             Ссылка на GitHub
           </button>
         </div>
-        <textarea
-          className="w-full h-64 p-4 bg-zinc-800 border-2 border-zinc-600 text-zinc-100"
-          placeholder="Вставь код сюда..."
-          onChange={e => setCode(e.target.value)}
-          value={code}
-        />
+        {inputMode === 'code' 
+          ?  <textarea
+              className="w-full h-64 p-4 bg-zinc-800 border-2 border-zinc-600 text-zinc-100"
+              placeholder="Вставь код сюда..."
+              onChange={e => setCode(e.target.value)}
+              value={code}
+            />
+          : <input
+              type="text"
+              className="w-full p-4 bg-zinc-800 border-2 border-zinc-600 text-zinc-100"
+              placeholder="https://github.com/..."
+              value={url}
+              onChange={e => setUrl(e.target.value)}
+            />
+        }
+
         <button
           className="px-6 py-3 bg-zinc-800 border-2 border-zinc-600 text-zinc-100 cursor-pointer"
           onClick={send}
