@@ -1,7 +1,15 @@
 import { MODES } from "@/app/lib/modes"
 
 export async function POST(req: Request) {
-    const { code, mode } = await req.json()
+    const { code, mode, inputMode, url } = await req.json()
+
+    let finalCode = code
+
+    if (inputMode === "url") {
+        const rawUrl = url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/')
+        
+    }
+
     const selected = MODES.find(m => m.id === mode)
     const res = await fetch('https://text.pollinations.ai/openai', {
         method: 'POST',
