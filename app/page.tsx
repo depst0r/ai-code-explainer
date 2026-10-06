@@ -10,12 +10,15 @@ export default function Home() {
   const [code, setCode] = useState('')
   const [reply, setReply] = useState('')
   const [mode, setMode] = useState('explain')
+  const [inputMode, setInputMode] = useState('code')
+  const [url, setUrl] = useState('')
+
 
   const send = async () => {
   const res = await fetch('/api/explain', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ code, mode }),
+    body: JSON.stringify({ code, mode, inputMode, url }),
   })
   const data = await res.json()
   setReply(data.reply)
@@ -37,6 +40,20 @@ export default function Home() {
           {res.name}
           </button>
         ))}
+        </div>
+        <div className="flex gap-2 justify-center">
+          <button
+            onClick={() => setInputMode('code')}
+            className={`px-4 py-2 border-2 cursor-pointer ${inputMode === 'code'  && 'bg-zinc-600 border-zinc-400'}`}
+          >
+            Код
+          </button>
+          <button
+            onClick={() => setInputMode('url')}
+            className={`px-4 py-2 border-2 cursor-pointer ${inputMode === 'url'  && 'bg-zinc-600 border-zinc-400'}`}
+          >
+            Ссылка на GitHub
+          </button>
         </div>
         <textarea
           className="w-full h-64 p-4 bg-zinc-800 border-2 border-zinc-600 text-zinc-100"
