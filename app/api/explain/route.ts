@@ -6,9 +6,15 @@ export async function POST(req: Request) {
     let finalCode = code
 
     if (inputMode === "url") {
+        if (!url.includes('github.com')) {
+            return Response.json({ reply: 'Нужна ссылка с github.com' })
+        }
         const rawUrl = url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/')
-        const res = await fetch(rawUrl)
-        finalCode = await res.text()
+        const githubRes = await fetch(rawUrl)
+        if (!githubRes.ok) {
+            return Response.json({ reply: 'Не удалось получить файл: ' + githubRes.status })
+        }
+        finalCode = await githubRes.text()
     }
 
     const selected = MODES.find(m => m.id === mode)
